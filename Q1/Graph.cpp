@@ -4,10 +4,10 @@ using namespace std;
 template<typename T>
 class Graph {
     public:
-    vector<vector<Vertex<T>>> adjList; // Adjacency List - will be used to form the Graph
+    vector<vector<Vertex<T> > > adjList; // Adjacency List - will be used to form the Graph
 
     // Parameterised Constructor
-    Graph(vector<Edge<T>> const &edges, int n) { // Constructor takes a list of Edges & the number of nodes in the Graph
+    Graph<T>(vector<Edge<T> > const &edges, int n) { // Constructor takes a list of Edges & the number of nodes in the Graph
         adjList.resize(n); //Resizing the vector to hold n elements of type vector<Vertex>
         if (isAcyclic(edges)) {
             //Adding the edges to the graph if the edges are acyclic
@@ -17,19 +17,19 @@ class Graph {
         } else cout << "Error: Graph cannot contain cycles.\n";
     }
 
-    Graph() {  // Default Constructor
+    Graph<T>() {  // Default Constructor
 
     }
 };
 
 template<typename T>
-bool isAcyclic(vector<Edge<T>> const &edges) {
-    
+bool isAcyclic(vector<Edge<T> > const &edges) {
+    return true; //change
 }   
 
 template<typename T>
 int removeNode(Graph<T> g, Vertex<T> vertex) {
-        
+    return 0; //change
 }
 
 template<typename T>

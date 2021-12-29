@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/Users/daryl/Desktop/VSCode/CPS2004 Assignment/Q1/build",
+  "command": "/usr/bin/clang++   -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk -mmacosx-version-min=12.0 -o CMakeFiles/CPS2004-Assignment.dir/main.cpp.o -c \"/Users/daryl/Desktop/VSCode/CPS2004 Assignment/Q1/main.cpp\"",
+  "file": "/Users/daryl/Desktop/VSCode/CPS2004 Assignment/Q1/main.cpp"
+}
+]
