@@ -15,16 +15,25 @@ int main() {
     // Creating 4 edges with the previously set Vertices
     Edge<int> *e1 = new Edge<int>(*v1, *v2);
     Edge<int> *e2 = new Edge<int>(*v2, *v3);
-    Edge<int> *e3 = new Edge<int>(*v3, *v4);
-    Edge<int> *e4 = new Edge<int>(*v4, *v5);
+    Edge<int> *e3 = new Edge<int>(*v3, *v1);
+    Edge<int> *e4 = new Edge<int>(*v5, *v3);
 
 
-    vector<Edge<int> > edgeList = {e1, e2, e3, e4}; // List of edges
+    vector<Edge<int> > edgeList; // List of edges
+    edgeList.push_back(*e1);
+    edgeList.push_back(*e2);
+    edgeList.push_back(*e3);
+    edgeList.push_back(*e4);
 
-    int n = 4; // Number of node
+    int n = 5; // Number of node
     
     // Constructing the graph 
     Graph<int> g(edgeList, n);
+
+    if (!isDAG(g, n)) {
+        cout << "Error: The graph is not acyclic." << endl;
+        return 0;
+    }
 
     // Printing the graph's adjacency list
     printGraph(g, n);
