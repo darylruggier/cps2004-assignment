@@ -15,8 +15,8 @@ int main() {
     // Creating 4 edges with the previously set Vertices
     Edge<int> *e1 = new Edge<int>(*v1, *v2);
     Edge<int> *e2 = new Edge<int>(*v2, *v3);
-    Edge<int> *e3 = new Edge<int>(*v3, *v1);
-    Edge<int> *e4 = new Edge<int>(*v5, *v3);
+    Edge<int> *e3 = new Edge<int>(*v3, *v4);
+    Edge<int> *e4 = new Edge<int>(*v4, *v5);
 
 
     vector<Edge<int> > edgeList; // List of edges
@@ -36,7 +36,10 @@ int main() {
     }
 
     // Printing the graph's adjacency list
-    printGraph(g, n);
+    //printGraph(g, n);
+    getEdges(g, n);
+   // removeNode(g, *v1);
+   // printGraph(g, n-1);
 
     return 0;
 }

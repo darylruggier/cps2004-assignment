@@ -4,7 +4,7 @@ project(CPS2004-Assignment VERSION 0.1.0)
 include(CTest)
 enable_testing()
 
-add_executable(CPS2004-Assignment main.cpp)
+add_executable(CPS2004-Assignment launcher.cpp)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

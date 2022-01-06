@@ -5,13 +5,22 @@ template<typename T>
 class Graph {
     public:
     vector<vector<Vertex<T> > > adjList; // Adjacency List - will be used to form the Graph
+    vector<Vertex<T> > src_nodes;
+    vector<Vertex<T> > dest_nodes;
 
     // Parameterised Constructor
     Graph<T>(vector<Edge<T> > const &edges, int n) { // Constructor takes a list of Edges & the number of nodes in the Graph
         adjList.resize(n); //Resizing the vector to hold n elements of type vector<Vertex>
+        src_nodes.resize(n/2);
+        dest_nodes.resize(n/2);
         for (auto &edge: edges) {
+            int i = 0;
             adjList[edge.src.node_id].push_back(edge.dest.node_id);
-        } 
+
+            src_nodes[i] = edge.src.node_id;
+            dest_nodes[i] = edge.dest.node_id;
+            i++;
+        }
     }
 
     Graph<T>() {  // Default Constructor
@@ -19,11 +28,6 @@ class Graph {
     }
 };
 
-template<typename T>
-bool isAcyclic(vector<Edge<T> > const &edges) {
-
-    return true; //change
-}   
 
 template<typename T>
 // Perform DFS on the graph and set the departure time of all vertices of the graph
@@ -77,19 +81,19 @@ bool isDAG(Graph<T> const &graph, int n) {
     return true;
 }
 
-template<typename T>
-int removeNode(Graph<T> g, Vertex<T> vertex) {
-    return 0; //change
-}
+/*template<typename T>
+int removeNode(Graph<T> const &graph, Vertex<T> node) {
+    for (int i = 0; i < graph.adjList.size(); i++) {
+        if (graph.adjList[i] == node.node_id) {
+            graph.erase(remove(graph.begin(), graph.end(), node), graph.end());
+            return 1;
+        }
+    }
+}*/
 
 template<typename T>
-int getEdges(Graph<T> g) { // Returns the number of edges of a given Graph
-    return g.adjList.size();
-}
-
-template<typename T>
-void printGraph(Graph<T> const &graph, int n) {
-    for (int i = 0; i < n; i++) {
+void getEdges(Graph<T> const &graph, int n) {
+    for (T i = 0; i < n; i++) {
         cout << i << " --> ";
 
         for (Vertex<T> v: graph.adjList[i]) {
@@ -98,3 +102,4 @@ void printGraph(Graph<T> const &graph, int n) {
         cout << endl;
     }
 }
+

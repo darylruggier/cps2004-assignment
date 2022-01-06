@@ -1,5 +1,6 @@
 #include "vertex.hpp"
 
+static int cnt = 0;
 template<typename T>
 class Vertex {
     public:

@@ -1,0 +1,1 @@
+g++ -Wall -std=c++2a -g -march=native ./*.cpp
