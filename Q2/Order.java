@@ -10,6 +10,7 @@ public class Order {
 	private long volume;
 	private Date timestamp;
 	private User user;
+	private Crypto crypto;
 
 	public static final Order EMPTY = new Builder().build();
 
@@ -25,6 +26,7 @@ public class Order {
 				.price(order.price)
 				.volume(order.volume)
 				.user(order.user)
+				.crypto(order.crypto)
 				.build();
 	}
 	
@@ -38,6 +40,8 @@ public class Order {
 		private long volume;
 
 		private User user;
+
+		private Crypto crypto;
 		
 		public Builder() {
 		}
@@ -66,6 +70,11 @@ public class Order {
 			this.user = user;
 			return this;
 		}
+
+		public Order.Builder crypto(Crypto crypto) {
+			this.crypto = crypto;
+			return this;
+		}
 		
 		public Order build() {
 			return new Order(this);
@@ -77,6 +86,8 @@ public class Order {
 		this.orderType = builder.orderType;
 		this.price = builder.price;
 		this.volume = builder.volume;
+		this.user = builder.user;
+		this.crypto = builder.crypto;
 		
 		timestamp = new Date();
 	}

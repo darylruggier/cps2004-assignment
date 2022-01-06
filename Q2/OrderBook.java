@@ -1,6 +1,5 @@
 package Q2;
 import java.util.concurrent.BlockingQueue;
-import java.math.BigInteger;
 import java.util.*;
 
 import Q2.Order.OrderType;
@@ -11,7 +10,7 @@ public class OrderBook {
     List<Order> sells;
 
     HashMap<Long, Order> ordersCache = new HashMap<Long, Order>();
-    BlockingQueue<Order> order_queue;
+    BlockingQueue<Order> order_queue;  // data structure to hold orders
 
     public OrderBook(String id, BlockingQueue<Order> order_queue) { // Constructor
         this.order_queue = order_queue;
@@ -21,16 +20,19 @@ public class OrderBook {
         sells = new LinkedList<Order>();
     }
 
-    //@Override
     public void run() {
-        while (true) {
+        while (true) { // Keeps attempting to take orders off the queue while possible.
             try {
                 Order order = order_queue.take();
-
-                if (OrderType.BUY == order.getOrderType()) {
-                    buy(order);
-                } else if (OrderType.SELL == order.getOrderType()) {
-                    sell(order);
+                if (order.getUser().approved) {
+                    if (OrderType.BUY == order.getOrderType()) {
+                        buy(order);
+                    } else if (OrderType.SELL == order.getOrderType()) {
+                        sell(order);
+                    }
+                } else { // Exits if user is not approved by an Admin
+                    System.out.println("User not approved.");
+                    System.exit(0);
                 }
             } catch (InterruptedException e) {
                 // Stops when interrupted.
@@ -90,7 +92,7 @@ public class OrderBook {
     }
 
     /** 
-     * Tries to match given sell operation with all present buy operations. <br/>
+     * Tries to match given sell operation with all present buy operations. 
      * Gets rid of empty buy operations. 
      */
     private void processSell(Order sell) {
@@ -108,10 +110,7 @@ public class OrderBook {
         buys = clearEmptyOrders(buys);
     }
 
-    /** 
-     * Tries to match given sell operation with all present buy operations. <br/>
-     * Gets rid of empty buy operations. 
-     */
+    // Tries to match given sell operation with all present buy operations (gets rid of empty buy operations)
     private void processBuy(Order buy) {
         for (Order sell : sells) {
             if (sell.getPrice().compareTo(buy.getPrice()) > 0 
@@ -142,7 +141,7 @@ public class OrderBook {
         int lastIndex = Math.max(0, orders.size());
 
         List<Order> updatedOrders = new ArrayList<Order>();
-        //Lists.newArrayList(orders.subList(Math.min(index, lastIndex), lastIndex));
+        //newArrayList(orders.subList(Math.min(index, lastIndex), lastIndex));
         return updatedOrders;
     }
 
@@ -158,12 +157,7 @@ public class OrderBook {
         }
     }
 
-    /** 
-     * Returns String representation of order from the list.
-     * @param orders List of orders
-     * @param index Index of order to be formatted. 
-     * 		If a list does not contain order in the given position empty String is returned 
-     */
+    // Returns String representation of order from the list.
     private String getFormattedOrder(List<Order> orders, int index) {
         String formattedOrder = "";
         if (index >= 0 && index < orders.size()) {
@@ -185,12 +179,15 @@ public class OrderBook {
         return ordersCache.get(orderId);
     }
 
+
+    // These final 3 functions have been imported from the Guava Lists library.
     public static <E> ArrayList<E> newArrayList(E... elements) {
         int capacity = computeArrayListCapacity(elements.length);
         ArrayList<E> list = new ArrayList<E>(capacity);
         Collections.addAll(list, elements);
         return list;
     }
+    
 
     static int computeArrayListCapacity(int arraySize) {
         if (arraySize <= 0) {

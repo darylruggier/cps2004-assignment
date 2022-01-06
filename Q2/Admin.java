@@ -11,8 +11,9 @@ public class Admin extends User {
         this.admin_id = count.incrementAndGet(); // Incrementing the ID and assigning it to the Admin
     }
 
-    public boolean approveTrader(Trader trader) { // Function used to approve the user, given they are age 18+
+    public boolean approveTrader(User trader) { // Function used to approve the user, given they are age 18+
         if (trader.age >= 18) {
+            trader.approved = true;  // setting approved to true 
             return true;
         }
         return false;

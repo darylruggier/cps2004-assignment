@@ -11,7 +11,4 @@ public class Trader extends User {
         super(name, age);
         this.trader_id = count.incrementAndGet(); // Incrementing the ID and assigning it to the trader
     }
-
-
-
 }

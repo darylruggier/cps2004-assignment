@@ -7,6 +7,7 @@ public class User {
     private final int user_id;
     protected String name;
     protected int age;
+    protected boolean approved = false;
 
     public User(String name, int age) { // Constructor
         this.name = name;

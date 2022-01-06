@@ -1,4 +1,4 @@
-package com.cps2004;
+package Q2;
 
 public class Crypto {
     public int supply;
