@@ -8,6 +8,7 @@ public class OrderBook {
     public LinkedList<Order> order_queue;
 
     public OrderBook() {
-
+        orders = new ArrayList<Order>();
+        order_queue = new LinkedList<Order>();
     }
 }

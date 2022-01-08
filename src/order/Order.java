@@ -3,10 +3,13 @@ package order;
 import user.User;
 
 import java.math.BigDecimal;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Order {
-    private final OrderType orderType;
-    private final OrderSubType orderSubType;
+    private static final AtomicInteger count = new AtomicInteger(0); // Used to set IDs (index 1)
+    public final int order_id;
+    public final OrderType orderType;
+    public final OrderSubType orderSubType;
     public BigDecimal price;
     public double quantity;
     public long volume;
@@ -28,6 +31,7 @@ public class Order {
         this.orderType = orderType;
         this.orderSubType = orderSubType;
         this.price = price;
+        this.order_id = count.incrementAndGet();
     }
 
     public Order(User user, Crypto crypto, double quantity, OrderType orderType, OrderSubType orderSubType) { // Constructor for MARKET orders (buys / sells at current market price)
@@ -36,5 +40,6 @@ public class Order {
         this.quantity = quantity;
         this.orderType = orderType;
         this.orderSubType = orderSubType;
+        this.order_id = count.incrementAndGet();
     }
 }
