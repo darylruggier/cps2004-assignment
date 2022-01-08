@@ -11,11 +11,12 @@ public class Admin extends User {
         this.admin_id = count.incrementAndGet(); // Incrementing the ID and assigning it to the Admin
     }
 
-    public boolean approveTrader(User trader) { // Function used to approve the user, given they are age 18+
-        if (trader.age >= 18) {
-            trader.approved = true;  // setting approved to true 
-            return true;
+    public void approveUsers() { // Function used to approve the user, given they are age 18+
+        for (int i = 0; i < registrations.size(); i++) { // how do I access this without making multiple instances of platform? interfaces for multiple inheritance? 
+            if (registrations[i].age >= 18) {
+                registrations[i].approved = true;
+            }
+            registrations[i].approved = false;
         }
-        return false;
     }
 }

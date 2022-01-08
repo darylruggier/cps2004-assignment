@@ -15,6 +15,12 @@ public class User {
         this.user_id = count.incrementAndGet(); // Incrementing the ID and assigning it to the User
     }
 
+    public void placeOrder(Order order) {
+        if (!approved) {
+            System.out.println("User is not an approved trader.");
+        }
+    }
+    
     /*public int getID() { // Used for testing purposes
         return user_id;
     } */
