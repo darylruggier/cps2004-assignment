@@ -1,14 +1,15 @@
 package order;
 
+//import java.util.Queue;
 import java.util.LinkedList;
 import java.util.ArrayList;
 
 public class OrderBook {
-    public ArrayList<Order> orders;
-    public LinkedList<Order> order_queue;
+    public ArrayList<Order> orders; // Order History
+    public LinkedList<Order> order_queue; // Order Queue (i.e. current orders yet to be settled)
 
     public OrderBook() {
-        orders = new ArrayList<Order>();
-        order_queue = new LinkedList<Order>();
+        orders = new ArrayList<>();
+        order_queue = new LinkedList<>();
     }
 }

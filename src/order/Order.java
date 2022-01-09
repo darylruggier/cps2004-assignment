@@ -12,6 +12,7 @@ public class Order {
     public double quantity;
     public final User user;
     public final Crypto crypto;
+    public boolean isFilled = false;
 
     public enum OrderType { // Type of order
         BUY, SELL
