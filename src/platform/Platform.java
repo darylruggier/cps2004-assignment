@@ -38,6 +38,8 @@ public class Platform { // singleton class
     }
 
     public void processOrder(Order order) {
+        String order_filled_msg = order.orderType + " " + order.orderSubType + " Order (ID " + order.order_id + ") has been filled.";
+        String order_partially_filled_msg = order.orderType + " " + order.orderSubType + " Order (ID " + order.order_id + ") has been partially filled.";
         switch(order.orderType) {
             case BUY:
                 switch(order.orderSubType) {
@@ -49,42 +51,69 @@ public class Platform { // singleton class
                             order.user.fiat_balance -= (filled_quantity * order.crypto.price);
                             order.user.crypto_balance += filled_quantity;
                             order.quantity -= filled_quantity; //updating order quantity
-                            System.out.println("Order (ID " + order.order_id + ") has been partially filled.");
+                            System.out.println(order_partially_filled_msg);
                         } else if (order.crypto.supply > order.quantity) { // filled
                             order.crypto.supply -= order.quantity;
                             order.user.crypto_balance += order.quantity;
                             order.user.fiat_balance -= order.quantity * order.crypto.price;
                             order.quantity = 0;
                             order_book.order_queue.remove(order); // updating order book
-                            System.out.println("Order (ID " + order.order_id + ") has been filled.");
+                            System.out.println(order_filled_msg);
                         } else {
                             System.out.println("Invalid order.");
                         }
                         break;
 
                     case LIMIT:
-                        if (order.ask_price <= order.crypto.price) {
+                        if (order.price <= order.crypto.price) {
                             if (order.quantity > order.crypto.supply && order.crypto.supply > 0) { // partial fill
                                 double filled_quantity = order.quantity - order.crypto.supply;
                                 order.crypto.supply -= filled_quantity;
-                                order.user.fiat_balance -= (filled_quantity * order.ask_price);
+                                order.user.fiat_balance -= (filled_quantity * order.price);
                                 order.user.crypto_balance += filled_quantity;
                                 order.quantity -= filled_quantity; // updating order_quantity
-                                System.out.println("Order (ID " + order.order_id + ") has been partially filled.");
+                                System.out.println(order_partially_filled_msg);
                             } else if (order.crypto.supply > order.quantity) { // filled
                                 order.crypto.supply -= order.quantity;
                                 order.user.crypto_balance += order.quantity;
-                                order.user.fiat_balance -= order.quantity * order.ask_price;
+                                order.user.fiat_balance -= order.quantity * order.price;
                                 order.quantity = 0;
                                 order_book.order_queue.remove(order); // remove order off queue as it is settled
-                                System.out.println("Order (ID " + order.order_id + ") has been filled.");
-                            }
+                                System.out.println(order_filled_msg);                            }
                         } else {
                             //limit order could not be filled as crypto price is still above ask price.
                         }
                         break;
+                    default:
+                        System.out.println("Invalid order sub-type: must be MARKET or LIMIT order.");
                 }
             case SELL:
+                if (order.quantity > order.user.crypto_balance) {
+                    System.out.println("Error: You are attempting to sell more than you own.");
+                    return;
+                }
+
+                switch(order.orderSubType) {
+                    case MARKET:
+                        order.user.crypto_balance -= order.quantity;
+                        order.user.fiat_balance += (order.quantity * order.crypto.price);
+                        order.crypto.supply += order.quantity;
+                        order.quantity = 0;
+                        order_book.order_queue.remove(order);
+                        System.out.println(order_filled_msg);
+                        break;
+                    case LIMIT:
+                        if (order.price <= order.crypto.price) {
+                            order.user.crypto_balance -= order.quantity;
+                            order.user.fiat_balance += (order.quantity * order.price);
+                            order.crypto.supply += order.quantity;
+                            order.quantity = 0;
+                            order_book.order_queue.remove(order);
+                            System.out.println(order_filled_msg);
+                        }
+                        break;
+
+                }
         }
     }
 
