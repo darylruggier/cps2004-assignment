@@ -2,6 +2,7 @@ package platform;
 
 import java.util.ArrayList;
 
+import order.Crypto;
 import order.Order;
 import order.OrderBook;
 import user.User;
@@ -24,6 +25,10 @@ public class Platform { // singleton class
 
     public int count = 0;
     public void addOrder(Order order) { // Adding the order to the order history and the order queue
+        if (!order.user.approved) {
+            System.out.println("Error: User is not approved to trade.");
+            System.exit(0);
+        }
         if (order.quantity <= 0) {
             System.out.println("Invalid order quantity.");
             return;
@@ -34,7 +39,7 @@ public class Platform { // singleton class
     }
 
     public Order getOrder() {
-        return order_book.order_queue.pop();
+        return order_book.order_queue.peek();
     }
 
     public void processOrder(Order order) {
@@ -123,5 +128,14 @@ public class Platform { // singleton class
 
     public int getUserID(User user) {
         return user.user_id;
+    }
+
+    public void getUserBalance(User user) {
+        System.out.println("User: " + user.name + " has FIAT balance " + user.fiat_balance);
+        System.out.println("User: " + user.name + " has CRYPTO balance " + user.crypto_balance);
+    }
+
+    public void getCryptoData(Crypto crypto) {
+        System.out.println("\nSymbol: " + crypto.symbol + "\nPrice: " + crypto.price + "\nSupply: " + crypto.supply);
     }
 }

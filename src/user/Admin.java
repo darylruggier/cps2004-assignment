@@ -15,12 +15,10 @@ public class Admin extends User {
         this.admin_id = count.incrementAndGet(); // Incrementing the ID and assigning it to the Admin
     }
 
-    public void approveUsers() { // Function used to approve the user, given they are age 18+
-        for (User registration : platform.registrations) { // how do I access this without making multiple instances of platform? interfaces for multiple inheritance?
-            if (registration.age >= 18) {
-                registration.approved = true;
-            }
-            registration.approved = false;
+    public void processRegistrations() { // Function used to approve the user, given they are age 18+
+        for (User registration : platform.registrations) {
+            registration.approved = registration.age >= 18;
         }
+        platform.registrations.clear();
     }
 }
