@@ -10,7 +10,7 @@ public class Platform { // singleton class
     private static Platform single_instance = null;
 
     public OrderBook order_book = new OrderBook();
-    public ArrayList<User> registrations = new ArrayList<User>();
+    public ArrayList<User> registrations = new ArrayList<>();
 
     private Platform() {
     }
@@ -24,6 +24,10 @@ public class Platform { // singleton class
 
     public int count = 0;
     public void addOrder(Order order) { // Adding the order to the order history and the order queue
+        if (order.quantity <= 0) {
+            System.out.println("Invalid order quantity.");
+            return;
+        }
         order_book.orders.add(order);
         order_book.order_queue.push(order);
         count++;
@@ -41,14 +45,16 @@ public class Platform { // singleton class
                         if (order.quantity > order.crypto.supply && order.crypto.supply > 0) { // partially filled
                             double filled_quantity = order.quantity - order.crypto.supply;
                             order.quantity -= order.crypto.supply; // partially filled.
+                            order.crypto.supply -= filled_quantity;
                             order.user.fiat_balance -= (filled_quantity * order.crypto.price);
                             order.user.crypto_balance += filled_quantity;
                             order.quantity -= filled_quantity; //updating order quantity
                             System.out.println("Order (ID " + order.order_id + ") has been partially filled.");
                         } else if (order.crypto.supply > order.quantity) { // filled
-                            order.crypto.supply -= order.quantity; // filled
+                            order.crypto.supply -= order.quantity;
                             order.user.crypto_balance += order.quantity;
                             order.user.fiat_balance -= order.quantity * order.crypto.price;
+                            order.quantity = 0;
                             order_book.order_queue.remove(order); // updating order book
                             System.out.println("Order (ID " + order.order_id + ") has been filled.");
                         } else {
@@ -57,22 +63,26 @@ public class Platform { // singleton class
                         break;
 
                     case LIMIT:
-                        // check quantity is valid (i.e. order.quantity > 0)
-                        // if (ask.price >= crypto.price (current price)
-                            // if order.quantity > crypto.supply && crypto.supply > 0 // partial fill
-                                // int filled_quantity = order.quantity - crypto.supply;
-                                // user.fiat_balance -= (filled.quantity * ask.price)
-                                // user.crypto_balance += filled_quantity;
-                                // order.quantity -= filled_quantity; // updating order_quantity
-                                // System.out.println("Order (ID " + order.order_id + ") has been partially filled.");
-                            // else if crypto.supply > order.quantity // filled
-                                // crypto.supply -= order.quantity;
-                                // user.crypto_balance += order.quantity;
-                                // user.fiat_balance -= order.quantity * ask_price
-                                // order_queue.remove(order); // remove order off queue as it is settled
-                                // System.out.println("Order (ID " + order.order_id + ") has been filled.");
-
-
+                        if (order.ask_price <= order.crypto.price) {
+                            if (order.quantity > order.crypto.supply && order.crypto.supply > 0) { // partial fill
+                                double filled_quantity = order.quantity - order.crypto.supply;
+                                order.crypto.supply -= filled_quantity;
+                                order.user.fiat_balance -= (filled_quantity * order.ask_price);
+                                order.user.crypto_balance += filled_quantity;
+                                order.quantity -= filled_quantity; // updating order_quantity
+                                System.out.println("Order (ID " + order.order_id + ") has been partially filled.");
+                            } else if (order.crypto.supply > order.quantity) { // filled
+                                order.crypto.supply -= order.quantity;
+                                order.user.crypto_balance += order.quantity;
+                                order.user.fiat_balance -= order.quantity * order.ask_price;
+                                order.quantity = 0;
+                                order_book.order_queue.remove(order); // remove order off queue as it is settled
+                                System.out.println("Order (ID " + order.order_id + ") has been filled.");
+                            }
+                        } else {
+                            //limit order could not be filled as crypto price is still above ask price.
+                        }
+                        break;
                 }
             case SELL:
         }

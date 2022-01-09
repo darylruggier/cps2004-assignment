@@ -1,8 +1,6 @@
 package order;
 
 import user.User;
-
-import java.math.BigDecimal;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Order {
@@ -10,7 +8,7 @@ public class Order {
     public final int order_id;
     public final OrderType orderType;
     public final OrderSubType orderSubType;
-    public BigDecimal price;
+    public double ask_price;
     public double quantity;
     public long volume;
     public final User user;
@@ -24,13 +22,13 @@ public class Order {
         MARKET, LIMIT
     }
 
-    public Order(User user, Crypto crypto, double quantity, OrderType orderType, OrderSubType orderSubType, BigDecimal price) { // Constructor for LIMIT order (buys / sells at price indicated in the order)
+    public Order(User user, Crypto crypto, double quantity, OrderType orderType, OrderSubType orderSubType, double ask_price) { // Constructor for LIMIT order (buys / sells at price indicated in the order)
         this.user = user;
         this.crypto = crypto;
         this.quantity = quantity;
         this.orderType = orderType;
         this.orderSubType = orderSubType;
-        this.price = price;
+        this.ask_price = ask_price;
         this.order_id = count.incrementAndGet();
     }
 
