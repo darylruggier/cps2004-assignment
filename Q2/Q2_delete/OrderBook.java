@@ -1,8 +1,9 @@
-package Q2;
+package Q2.Q2_delete;
 import java.util.concurrent.BlockingQueue;
-import java.util.*;
 
-import Q2.Order.OrderType;
+import Q2.Q2_delete.Order.OrderType;
+
+import java.util.*;
 
 public class OrderBook {
     String id;
@@ -11,7 +12,7 @@ public class OrderBook {
 
     HashMap<Long, Order> ordersCache = new HashMap<Long, Order>();
     BlockingQueue<Order> order_queue;  // data structure to hold orders
-    Database db = Database.get();
+    DataRepository db = DataRepository.get();
     int x = db.getInt();
 
     public OrderBook(String id, BlockingQueue<Order> order_queue) { // Constructor

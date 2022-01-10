@@ -1,8 +1,11 @@
-package Q2;
+package Q2.User;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import Q2.Platform.Platform;
+
 public class Admin extends User {
+    Platform platform = Platform.getInstance();
     private static final AtomicInteger count = new AtomicInteger(0); //Used to set IDs (index 1)
     private int admin_id;
 
@@ -12,11 +15,11 @@ public class Admin extends User {
     }
 
     public void approveUsers() { // Function used to approve the user, given they are age 18+
-        for (int i = 0; i < registrations.size(); i++) { // how do I access this without making multiple instances of platform? interfaces for multiple inheritance? 
-            if (registrations[i].age >= 18) {
-                registrations[i].approved = true;
+        for (int i = 0; i < platform.registrations.size(); i++) { // how do I access this without making multiple instances of platform? interfaces for multiple inheritance? 
+            if (platform.registrations[i].age >= 18) {
+                platform.registrations[i].approved = true;
             }
-            registrations[i].approved = false;
+            platform.registrations[i].approved = false;
         }
     }
 }

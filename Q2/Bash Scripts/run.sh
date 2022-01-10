@@ -1,2 +1,2 @@
-cd build
+cd ..
 java Launcher

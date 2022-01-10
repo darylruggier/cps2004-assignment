@@ -1,6 +1,10 @@
-package Q2;
+package Q2.Platform;
 
 import java.util.Vector;
+
+import Q2.Order.Order;
+import Q2.Order.OrderBook;
+import Q2.User.User;
 
 public class Platform extends OrderBook { // singleton class
     private static Platform single_instance = null;
