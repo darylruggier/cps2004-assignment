@@ -1,7 +1,5 @@
 package order;
 
-import java.math.BigDecimal;
-
 public class Crypto {
     public int supply;
     public double price;

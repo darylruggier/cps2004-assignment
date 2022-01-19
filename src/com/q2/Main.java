@@ -36,8 +36,7 @@ public class Main {
         }
         //ISSUE: The issue with processOrder() in the above for loop is the deletion of orders after being filled.
         //This causes a ConcurrencyModification Exception. (this issue arose when changing order_queue from a LinkedList to a Queue.)
-        //Either do the following or go back and try to traverse the LinkedList in reverse.
-        //Also,the deletion of orders has been moved from the switch statement in processOrder() to updateOrderQueue().
+        //Also, the deletion of orders has been moved from the switch statement in processOrder() to updateOrderQueue().
         //I believe that this function should be run as a background process (i.e. concurrency using threads & Runnable).
     }
 }

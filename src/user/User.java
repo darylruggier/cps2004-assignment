@@ -28,7 +28,7 @@ public class User {
     }
 
     Platform platform = Platform.getInstance();
-    public void placeOrder(Order order) {
+    public void placeOrder(Order order) { // used mainly for testing.
         if (!approved) {
             System.out.println("User is not an approved trader.");
         }

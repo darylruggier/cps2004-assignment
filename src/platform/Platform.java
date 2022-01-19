@@ -128,7 +128,7 @@ public class Platform { // singleton class
         }
     }
 
-    public void updateOrderQueue() { // Check if works. To be implemented using threads, so it's ran in the background
+    public void updateOrderQueue() { // Could be implemented using threads, so it's ran in the background
         order_book.order_queue.removeIf(orders -> orders.isFilled);
     }
 
