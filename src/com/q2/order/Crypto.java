@@ -1,4 +1,4 @@
-package order;
+package com.q2.order;
 
 public class Crypto {
     public int supply;

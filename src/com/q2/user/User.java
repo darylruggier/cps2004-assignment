@@ -1,7 +1,7 @@
-package user;
+package com.q2.user;
 
-import order.Order;
-import platform.Platform;
+import com.q2.order.Order;
+import com.q2.platform.Platform;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class User {

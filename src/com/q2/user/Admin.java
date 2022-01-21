@@ -1,6 +1,6 @@
-package user;
+package com.q2.user;
 
-import platform.Platform;
+import com.q2.platform.Platform;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -15,7 +15,7 @@ public class Admin extends User {
         this.admin_id = count.incrementAndGet(); // Incrementing the ID and assigning it to the Admin
     }
 
-    public void processRegistrations() { // Function used to approve the user, given they are age 18+
+    public void processRegistrations() { // Function used to approve the com.q2.user, given they are age 18+
         for (User registration : platform.registrations) {
             registration.approved = registration.age >= 18;
         }

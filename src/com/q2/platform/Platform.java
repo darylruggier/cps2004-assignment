@@ -1,11 +1,11 @@
-package platform;
+package com.q2.platform;
 
 import java.util.ArrayList;
 
-import order.Crypto;
-import order.Order;
-import order.OrderBook;
-import user.User;
+import com.q2.order.Crypto;
+import com.q2.order.Order;
+import com.q2.order.OrderBook;
+import com.q2.user.User;
 
 public class Platform { // singleton class
     private static Platform single_instance = null;
@@ -24,13 +24,13 @@ public class Platform { // singleton class
     }
 
     public int count = 0;
-    public void addOrder(Order order) { // Adding the order to the order history and the order queue
+    public void addOrder(Order order) { // Adding the com.q2.order to the com.q2.order history and the com.q2.order queue
         if (!order.user.approved) {
             System.out.println("Error: User is not approved to trade.");
             System.exit(0);
         }
         if (order.quantity <= 0) {
-            System.out.println("Invalid order quantity.");
+            System.out.println("Invalid com.q2.order quantity.");
             return;
         }
         order_book.orders.add(order);
@@ -60,7 +60,7 @@ public class Platform { // singleton class
                     order.crypto.supply -= filled_quantity;
                     order.user.fiat_balance -= (filled_quantity * order.crypto.price);
                     order.user.crypto_balance += filled_quantity;
-                    order.quantity -= filled_quantity; //updating order quantity
+                    order.quantity -= filled_quantity; //updating com.q2.order quantity
                     System.out.println(order_partially_filled_msg);
                 } else if (order.crypto.supply > order.quantity) { // filled
                     order.crypto.supply -= order.quantity;
@@ -70,7 +70,7 @@ public class Platform { // singleton class
                     order.isFilled = true;
                     System.out.println(order_filled_msg);
                 } else {
-                    System.out.println("Invalid order.");
+                    System.out.println("Invalid com.q2.order.");
                 }
                 break;
 
@@ -88,14 +88,14 @@ public class Platform { // singleton class
                         order.user.crypto_balance += order.quantity;
                         order.user.fiat_balance -= order.quantity * order.price;
                         order.quantity = 0;
-                        order.isFilled = true; // Setting isFilled to true once the order is settled.
+                        order.isFilled = true; // Setting isFilled to true once the com.q2.order is settled.
                         System.out.println(order_filled_msg);                            }
                 } else {
-                    //limit order could not be filled as crypto price is still above ask price.
+                    //limit com.q2.order could not be filled as crypto price is still above ask price.
                 }
                 break;
             default:
-                System.out.println("Invalid order sub-type: must be MARKET or LIMIT order.");
+                System.out.println("Invalid com.q2.order sub-type: must be MARKET or LIMIT com.q2.order.");
         }
     }
 

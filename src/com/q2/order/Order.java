@@ -1,6 +1,6 @@
-package order;
+package com.q2.order;
 
-import user.User;
+import com.q2.user.User;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Order {
@@ -14,7 +14,7 @@ public class Order {
     public final Crypto crypto;
     public boolean isFilled = false;
 
-    public enum OrderType { // Type of order
+    public enum OrderType { // Type of com.q2.order
         BUY, SELL
     }
 
@@ -22,7 +22,7 @@ public class Order {
         MARKET, LIMIT
     }
 
-    public Order(User user, Crypto crypto, double quantity, OrderType orderType, OrderSubType orderSubType, double price) { // Constructor for LIMIT order (buys / sells at price indicated in the order)
+    public Order(User user, Crypto crypto, double quantity, OrderType orderType, OrderSubType orderSubType, double price) { // Constructor for LIMIT com.q2.order (buys / sells at price indicated in the com.q2.order)
         this.user = user;
         this.crypto = crypto;
         this.quantity = quantity;
